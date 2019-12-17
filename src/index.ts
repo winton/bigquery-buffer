@@ -1,8 +1,8 @@
 import { BigQuery, Table } from "@google-cloud/bigquery"
 
 export class BigQueryBuffer {
-  FLUSH_INSERTS = 500
-  FLUSH_INTERVAL = 1000
+  bufferLimit = 500
+  timeLimit = 1000
 
   buffer: Record<string, any>[]
   table: Table
@@ -20,7 +20,7 @@ export class BigQueryBuffer {
   async push(record: Record<string, any>): Promise<any> {
     this.buffer.push(record)
 
-    if (this.buffer.length >= this.FLUSH_INSERTS) {
+    if (this.buffer.length >= this.bufferLimit) {
       return this.flush()
     }
   }
@@ -30,7 +30,7 @@ export class BigQueryBuffer {
 
     this.timeout = setTimeout(
       () => this.flush(),
-      this.FLUSH_INTERVAL
+      this.timeLimit
     )
 
     if (!this.buffer.length) {
