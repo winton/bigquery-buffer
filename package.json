@@ -1,6 +1,6 @@
 {
   "name": "@winton/bigquery-buffer",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "BigQuery insert buffer",
   "main": "dist/index.js",
   "scripts": {
