@@ -1,0 +1,59 @@
+{
+  "name": "@winton/bigquery-buffer",
+  "version": "0.0.1",
+  "description": "BigQuery insert buffer",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "./bin/build",
+    "release": "./bin/release",
+    "test": "mocha",
+    "update": "ncu -u",
+    "watch": "ttab 'tsc -b -w'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/winton/bigquery-buffer.git"
+  },
+  "author": "Winton Welsh <mail@wintoni.us>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/winton/bigquery-buffer/issues"
+  },
+  "homepage": "https://github.com/winton/bigquery-buffer#readme",
+  "devDependencies": {
+    "@google-cloud/bigquery": "4.5.0",
+    "@types/mocha": "5.2.7",
+    "@types/node": "12.12.18",
+    "@typescript-eslint/eslint-plugin": "2.12.0",
+    "@typescript-eslint/parser": "2.12.0",
+    "eslint": "6.7.2",
+    "eslint-config-prettier": "6.7.0",
+    "eslint-plugin-prettier": "3.1.2",
+    "expect": "24.9.0",
+    "husky": "3.1.0",
+    "lint-staged": "9.5.0",
+    "mocha": "6.2.2",
+    "npm-check-updates": "4.0.1",
+    "prettier": "1.19.1",
+    "release-it": "12.4.3",
+    "semver": "7.1.0",
+    "ttab": "0.6.1",
+    "typescript": "3.7.3"
+  },
+  "dependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm test"
+    }
+  },
+  "lint-staged": {
+    "*.{css,json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{js,jsx,ts}": [
+      "eslint --ignore-path .gitignore --fix",
+      "git add"
+    ]
+  }
+}
