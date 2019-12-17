@@ -1,6 +1,6 @@
 {
   "name": "bigquery-buffer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "BigQuery insert buffer",
   "main": "dist/index.js",
   "scripts": {
