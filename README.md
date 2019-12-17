@@ -11,16 +11,14 @@ npm install bigquery-buffer
 ## Usage
 
 ```ts
+import { BigQuery } from "@google-cloud/bigquery"
+
 const buffer = new BigQueryBuffer(
   new BigQuery(),
   "dataset",
   "table"
 )
-```
 
-## Push a record
-
-```ts
 buffer.push({ myColumn: true })
 ```
 
