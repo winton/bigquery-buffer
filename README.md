@@ -12,6 +12,7 @@ npm install bigquery-buffer
 
 ```ts
 import { BigQuery } from "@google-cloud/bigquery"
+import { BigQueryBuffer } from "bigquery-buffer"
 
 const buffer = new BigQueryBuffer(
   new BigQuery(),
