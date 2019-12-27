@@ -2,7 +2,7 @@ import { BigQuery, Table } from "@google-cloud/bigquery"
 
 export class BigQueryBuffer {
   bufferLimit = 500
-  timeLimit = 1000
+  flushInterval = 10000
 
   buffer: Record<string, any>[]
   table: Table
@@ -11,10 +11,16 @@ export class BigQueryBuffer {
   constructor(
     bq: BigQuery,
     dataset: string,
-    table: string
+    table: string,
+    flushInterval?: number
   ) {
     this.buffer = []
     this.table = bq.dataset(dataset).table(table)
+
+    this.timeout = setInterval(
+      this.flush.bind(this),
+      flushInterval || this.flushInterval
+    )
   }
 
   async push(record: Record<string, any>): Promise<any> {
@@ -25,14 +31,7 @@ export class BigQueryBuffer {
     }
   }
 
-  async flush(cb?: Function): Promise<any> {
-    clearTimeout(this.timeout)
-
-    this.timeout = setTimeout(
-      () => this.flush(),
-      this.timeLimit
-    )
-
+  async flush(): Promise<any> {
     if (!this.buffer.length) {
       return
     }
@@ -40,14 +39,11 @@ export class BigQueryBuffer {
     const buffer = this.buffer
     this.buffer = []
 
-    return this.table
-      .insert(buffer)
-      .then(insert => cb && cb(null, insert))
-      .catch(err => (cb ? cb(err) : null))
+    return this.table.insert(buffer)
   }
 
-  async close(cb: Function): Promise<any> {
+  async close(): Promise<any> {
     clearTimeout(this.timeout)
-    return this.flush(cb)
+    return this.flush()
   }
 }
